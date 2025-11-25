@@ -49,8 +49,8 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    check_string = int(weather_data)
-    sum_weather = sum(check_string)
+    int_weather = [int(item) for item in weather_data]
+    sum_weather = sum(int_weather)
     mean_weather = sum_weather / len(weather_data) 
     return mean_weather
 
