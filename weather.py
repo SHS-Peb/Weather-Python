@@ -16,7 +16,7 @@ def format_temperature(temp):
     return f"{temp}{DEGREE_SYMBOL}"
 
 
-def convert_date(iso_string):
+def convert_date(iso_string): #TESTING
     """Converts and ISO formatted date into a human-readable format.
 
     Args:
@@ -28,7 +28,7 @@ def convert_date(iso_string):
     return human_date
 
 
-def convert_f_to_c(temp_in_fahrenheit):
+def convert_f_to_c(temp_in_fahrenheit): #COMPLETED
     """Converts a temperature from Fahrenheit to Celcius.
 
     Args:
@@ -41,7 +41,7 @@ def convert_f_to_c(temp_in_fahrenheit):
     return rounded_celsius
 
 
-def calculate_mean(weather_data):
+def calculate_mean(weather_data): #COMPLETED
     """Calculates the mean value from a list of numbers.
 
     Args:
