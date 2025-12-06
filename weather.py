@@ -27,7 +27,7 @@ def convert_date(iso_string): #COMPLETED
     """
     date = datetime.fromisoformat(iso_string)
     fancy_date = date.strftime("%A %d %B %Y")
-    return fancy_date
+    return f"{fancy_date}"
 
 #print(convert_date("2021-07-06T07:00:00+00:00"))
 
@@ -88,12 +88,10 @@ def find_min(weather_data):#COMPLETED
     Returns:
         The minimum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    if weather_data == []:
+    if not weather_data:
         return ()
-    else:
-        min_value = min(weather_data)
-        min_index = len(weather_data) - 1 - weather_data[::-1].index(min_value)
-        min_value = round(float(min_value), 1)
+    min_value = min(weather_data)
+    min_index = len(weather_data) - 1 - weather_data[::-1].index(min_value)
     return min_value, min_index
 
 #print(find_min([10, 5, 3, 7, 3, 9]))
@@ -106,12 +104,10 @@ def find_max(weather_data):#COMPLETED
     Returns:
         The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    if weather_data == []:
+    if not weather_data:
         return ()
-    else:
-        max_value = max(weather_data)
-        max_index = len(weather_data) - 1 - weather_data[::-1].index(max_value)
-        max_value = round(float(max_value), 1)
+    max_value = max(weather_data)
+    max_index = len(weather_data) - 1 - weather_data[::-1].index(max_value)
     
     return max_value, max_index
 
@@ -125,25 +121,38 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    #weather_data = load_data_from_csv(weather_data)
-    dates = [day[0] for day in weather_data]
-    low_temp = [day[1] for day in weather_data]
-    high_temp = [day[2] for day in weather_data]
+    if not weather_data: #fixes tuple issue from find_min and find_max
+        return ""
 
-    min_temp = find_min(low_temp)
-    max_temp = find_max(high_temp)
-    avg_low = calculate_mean(low_temp)
-    avg_high = calculate_mean(high_temp)
+    date = [item[0] for item in weather_data]
+    low_temp = [item[1] for item in weather_data]
+    high_temp = [item[2] for item in weather_data]
+
+    if not low_temp or not high_temp:
+        return ""
+
+    min_temp_f, min_index_f = find_min(low_temp)
+    max_temp_f, max_index_f = find_max(high_temp)
+    avg_low_f = calculate_mean(low_temp)
+    avg_high_f = calculate_mean(high_temp)
+
+    min_temp = format_temperature(convert_f_to_c(min_temp_f))
+    max_temp = format_temperature(convert_f_to_c(max_temp_f))
+    avg_low = format_temperature(convert_f_to_c(avg_low_f))
+    avg_high = format_temperature(convert_f_to_c(avg_high_f))
+
+    min_date = convert_date(date[min_index_f])
+    max_date = convert_date(date[max_index_f])
 
     summary = (f"{len(weather_data)} Day Overview\n"
-               f"The lowest temperature will be {format_temperature(min_temp)}, and will occur on {convert_date(dates[min_temp[1]])}.\n"
-               f"The highest temperature will be {format_temperature(max_temp)}, and will occur on {convert_date(dates[max_temp[1]])}.\n"
-               f"The average low this week is {format_temperature(round(avg_low))}.\n"
-               f"The average high this week is {format_temperature(round(avg_high))}.\n"
+               f"  The lowest temperature will be {min_temp}, and will occur on {min_date}.\n"
+               f"  The highest temperature will be {max_temp}, and will occur on {max_date}.\n"
+               f"  The average low this week is {avg_low}.\n"
+               f"  The average high this week is {avg_high}.\n"
     )
+    
+
     return summary
-
-
 
 #print(generate_summary("./tests/data/example_one.csv"))
 
