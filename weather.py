@@ -166,20 +166,22 @@ def generate_daily_summary(weather_data):
     """
     #weather_data = load_data_from_csv(".example_one.csv")
     
+    if not weather_data:
+        return  ""
+
     daily_summary = []
 
-    for day in weather_data:
-        date_raw, low, high = day
+    for date_raw, low, high in weather_data:
 
         date = convert_date(date_raw)
-        min = format_temperature(low)
-        max = format_temperature(high)
+        min = convert_f_to_c(low)
+        max = convert_f_to_c(high)
 
-    daily_template = (f"---- {date} ----\n"
-                     f"Minimum Temperature: {min}\n" 
-                     f"Maximum Temperature: {max}\n")
+        daily_template = (f"---- {date} ----\n"
+                     f"  Minimum Temperature: {format_temperature(min)}\n" 
+                     f"  Maximum Temperature: {format_temperature(max)}\n")
     
-    daily_summary.append(daily_template)
+        daily_summary.append(daily_template)
     return "\n".join(daily_summary) + "\n"
 
 #print(generate_daily_summary("./tests/data/example_one.csv"))
