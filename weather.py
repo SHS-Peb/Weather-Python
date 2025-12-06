@@ -102,8 +102,13 @@ def find_max(weather_data):#COMPLETED
     Returns:
         The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    max_value = max(weather_data)
-    max_index = len(weather_data) - 1 - weather_data[::-1].index(max_value)
+    if weather_data == []:
+        return ()
+    else:
+        max_value = max(weather_data)
+        max_index = len(weather_data) - 1 - weather_data[::-1].index(max_value)
+        max_value = round(float(max_value), 1)
+    
     return max_value, max_index
 
 #print(find_max([10, 5, 3, 7, 10, 9]))
