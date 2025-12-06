@@ -88,8 +88,12 @@ def find_min(weather_data):#COMPLETED
     Returns:
         The minimum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    min_value = min(weather_data)
-    min_index = len(weather_data) - 1 - weather_data[::-1].index(min_value)
+    if weather_data == []:
+        return ()
+    else:
+        min_value = min(weather_data)
+        min_index = len(weather_data) - 1 - weather_data[::-1].index(min_value)
+        min_value = round(float(min_value), 1)
     return min_value, min_index
 
 #print(find_min([10, 5, 3, 7, 3, 9]))
@@ -132,8 +136,8 @@ def generate_summary(weather_data):
     avg_high = calculate_mean(high_temp)
 
     summary = (f"{len(weather_data)} Day Overview\n"
-               f"The lowest temperature will be {format_temperature(min_temp[0])}, and will occur on {convert_date(dates[min_temp[1]])}.\n"
-               f"The highest temperature will be {format_temperature(max_temp[0])}, and will occur on {convert_date(dates[max_temp[1]])}.\n"
+               f"The lowest temperature will be {format_temperature(min_temp)}, and will occur on {convert_date(dates[min_temp[1]])}.\n"
+               f"The highest temperature will be {format_temperature(max_temp)}, and will occur on {convert_date(dates[max_temp[1]])}.\n"
                f"The average low this week is {format_temperature(round(avg_low))}.\n"
                f"The average high this week is {format_temperature(round(avg_high))}.\n"
     )
