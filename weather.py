@@ -92,6 +92,7 @@ def find_min(weather_data):#COMPLETED
         return ()
     min_value = min(weather_data)
     min_index = len(weather_data) - 1 - weather_data[::-1].index(min_value)
+    min_value = float(min_value)
     return min_value, min_index
 
 #print(find_min([10, 5, 3, 7, 3, 9]))
@@ -108,7 +109,7 @@ def find_max(weather_data):#COMPLETED
         return ()
     max_value = max(weather_data)
     max_index = len(weather_data) - 1 - weather_data[::-1].index(max_value)
-    
+    max_value = float(max_value)
     return max_value, max_index
 
 #print(find_max([10, 5, 3, 7, 10, 9]))
@@ -128,7 +129,7 @@ def generate_summary(weather_data):
     low_temp = [item[1] for item in weather_data]
     high_temp = [item[2] for item in weather_data]
 
-    if not low_temp or not high_temp:
+    if not low_temp or not high_temp: #fixes tuple issue from find_min and find_max
         return ""
 
     min_temp_f, min_index_f = find_min(low_temp)
