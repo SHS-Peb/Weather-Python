@@ -53,7 +53,7 @@ def calculate_mean(weather_data): #COMPLETED
     Returns:
         A float representing the mean value.
     """
-    int_weather = [int(item) for item in weather_data]
+    int_weather = [float(item) for item in weather_data]
     sum_weather = sum(int_weather)
     mean_weather = sum_weather / len(weather_data) 
     return mean_weather
@@ -72,6 +72,10 @@ def load_data_from_csv(csv_file):#COMPLETED
     with open(csv_file) as file: #AS FILE IS USED TO GIVE A REFERENCE TO THE OPENED FILE
         reader = csv.reader(file)
         for row in reader:
+            if not row: #skips empty rows
+                continue
+            if row[0] == "date": #skips header row
+                continue
             date = row[0]
             minimum = int(row[1])
             maximum = int(row[2])
